@@ -1,11 +1,21 @@
+}
 pragma solidity ^0.4.8;
 
 contract Trade {
     uint public object_rate = 1000;
     mapping (address => uint) objectAccount;
     mapping (address => uint) coinAccount;
+    mapping (address => uint) public objectId;
     address public owner;
+    string objectName;
+    Object[] public objects;
     
+    struct Object {
+        address object;
+        string name;
+        uint ObjectSince;
+    }
+
     function Trade() {
         owner = msg.sender;
     }
@@ -18,6 +28,23 @@ contract Trade {
         }  
     } 
     
+    /* This allow people to create objects */
+    modifier onlyObjects {
+        if(objectId[msg.sender] == 0)
+            throw;
+            _;
+    }
+
+    // Add Object
+    function object(address newObject, string objectName) onlyOwner {
+        uint id;
+        if(objectId[newObject] == 0) {
+            objectId[newObject] = objects.length;
+            id = objects.length++;
+            object[id] = Object({object : newObject, ObjectSince : now, name : name})
+        } else
+    }
+
     function setRate(uint rate) onlyOwner {
         object_rate = rate;
     }
