@@ -22,7 +22,8 @@ contract TokenSupply {
             throw;
             _;
     }
-    
+
+    /* Mint function */   
     function mintToken(address target, uint256 mintedAmount) onlyOwner {
     
     balanceOf[target] += mintedAmount;
